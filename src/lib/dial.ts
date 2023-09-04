@@ -52,8 +52,6 @@ function calculateNewRate(g: GoalVerbose, opts: Partial<AutodialSettings>) {
 }
 
 function shouldDial(g: GoalVerbose) {
-  if (g.odom) throw new Error("Odometer-type goals are not supported");
-
   const roadallEnd = g.roadall[g.roadall.length - 1];
 
   if (roadallEnd[2] === null)
