@@ -71,6 +71,11 @@ export default function GoalRow({ goal, username }: Props): JSX.Element {
 
   const rate = goal.mathishard[2];
 
+  let changeColor = "black";
+  if (pendingRate) {
+    changeColor = (rate > pendingRate) ? "crimson" : "green";
+  }
+
   return (
     <TableRow sx={{ backgroundColor }}>
       <TableCell>
@@ -101,7 +106,7 @@ export default function GoalRow({ goal, username }: Props): JSX.Element {
       </TableCell>
       <TableCell>{settings?.strict ? "yes" : "no"}</TableCell>
       <TableCell>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box sx={{ display: "flex", alignItems: "center", color: changeColor }}>
           {fn(rate)}/{goal.runits}
           {pendingRate && (
             <>
