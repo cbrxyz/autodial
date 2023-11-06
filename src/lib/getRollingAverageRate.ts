@@ -1,6 +1,7 @@
 import {now, parseDate} from "./time";
 import stepify from "./stepify";
 import aggregate from "./aggregate";
+import {getGoalAge} from "./getGoalAge";
 import {SID} from "./constants";
 import {Datapoint, GoalVerbose, UnixDatapoint} from "./types";
 
@@ -43,5 +44,7 @@ export function getRollingAverageRate(g: GoalVerbose): number {
   const aggregatedPoints = aggregate(g.datapoints, g.aggday);
   const summed = g.kyoom ? autoSum(aggregatedPoints) : aggregatedPoints;
 
-  return avgrate(summed, SID * 30, g.weekends_off);
+  // use min between 30 and the number of days the goal has been active
+  const days = Math.min(30, getGoalAge(g) / 86400);
+  return avgrate(summed, SID * days, g.weekends_off);
 }
